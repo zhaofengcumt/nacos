@@ -25,6 +25,8 @@ import java.util.List;
 @Component
 public class GateWayRouteDefinitionRepository implements RouteDefinitionRepository {
 
+
+
     private ApplicationEventPublisher publisher;
 
 
