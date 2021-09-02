@@ -13,8 +13,8 @@ public class AuthFailureHandler {
     Mono<Void> redirect(ServerWebExchange exchange, AuthException e) {
         return Mono.fromRunnable(() -> {
             ServerHttpResponse response = exchange.getResponse();
-            response.setStatusCode();
-            response.getHeaders().setLocation(createLocation(exchange, location));
+            response.setStatusCode(e.status);
+            response.getHeaders().setLocation(null);
         });
     }
 }

@@ -1,6 +1,7 @@
 package com.example.gateway.ext.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
@@ -24,7 +25,7 @@ public class AuthorizationFilter implements WebFilter {
         if (true) {
             return Mono.empty();
         }
-        throw new AuthorizationException();
+        throw new AuthorizationException(HttpStatus.UNAUTHORIZED, "");
     }
 
     @Autowired

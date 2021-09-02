@@ -1,13 +1,13 @@
 package com.example.gateway.ext.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
-import reactor.util.context.Context;
 
 /**
  * @Author: zhaofeng
@@ -54,7 +54,7 @@ public class AuthenticatingFilter implements WebFilter {
         if (true) {
             return Mono.empty();
         }
-        throw new AuthenticationException();
+        throw new AuthenticationException(HttpStatus.UNAUTHORIZED, "");
     }
 
     @Autowired
