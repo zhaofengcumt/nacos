@@ -1,5 +1,7 @@
 package com.example.gateway.ext.auth;
 
+import java.util.List;
+
 /**
  * @Author: zhaofeng
  * @Date: 2021/9/1 11:21
@@ -8,12 +10,13 @@ public class Authentication {
 
     private String username;
 
-    private String password;
+    private String systemId;
 
-    public Authentication(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
+    private String systemName;
+
+    private List<String> authorities;
+
+    private boolean authenticated;
 
     public String getUsername() {
         return username;
@@ -23,19 +26,35 @@ public class Authentication {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getSystemId() {
+        return systemId;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setSystemId(String systemId) {
+        this.systemId = systemId;
     }
 
-    @Override
-    public String toString() {
-        return "Authentication{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public String getSystemName() {
+        return systemName;
+    }
+
+    public void setSystemName(String systemName) {
+        this.systemName = systemName;
+    }
+
+    public List<String> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<String> authorities) {
+        this.authorities = authorities;
+    }
+
+    public boolean isAuthenticated() {
+        return authenticated;
+    }
+
+    public void setAuthenticated(boolean authenticated) {
+        this.authenticated = authenticated;
     }
 }

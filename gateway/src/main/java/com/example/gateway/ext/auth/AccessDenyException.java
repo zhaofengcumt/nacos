@@ -4,11 +4,11 @@ import org.springframework.http.HttpStatus;
 
 /**
  * @Author: zhaofeng
- * @Date: 2021/9/2 10:51
+ * @Date: 2021/9/1 10:52
  */
-public class AuthorizationException extends AuthException {
+public class AccessDenyException extends AuthException {
 
-    public AuthorizationException(HttpStatus status, String msg) {
+    public AccessDenyException(HttpStatus status, String msg) {
         super(msg);
         this.status = status;
     }

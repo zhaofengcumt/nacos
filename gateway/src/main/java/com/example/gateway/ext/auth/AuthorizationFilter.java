@@ -1,7 +1,6 @@
 package com.example.gateway.ext.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
@@ -13,23 +12,26 @@ import reactor.core.publisher.Mono;
  */
 public class AuthorizationFilter implements WebFilter {
 
-    private AuthFailureHandler authFailureHandler;
+    private HttpRedirectHandler authFailureHandler;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        return Mono.subscriberContext().map(c -> c.get(Authentication.class)).
-                   flatMap(this::authorize).onErrorResume(AuthorizationException.class, e -> authFailureHandler.redirect(exchange, e));
+        return Mono.subscriberContext().map(ctx -> ctx.get(Authentication.class)).
+                   flatMap(authentication -> checkAuthorities(authentication, exchange)).
+                   switchIfEmpty(chain.filter(exchange)).
+                   onErrorResume(AuthenticationException.class, e -> Mono.error(e));
     }
 
-    private Mono<Void> authorize(Authentication authentication) {
+    private Mono<Void> checkAuthorities(Authentication authentication, ServerWebExchange exchange) {
         if (true) {
             return Mono.empty();
         }
-        throw new AuthorizationException(HttpStatus.UNAUTHORIZED, "");
+        throw new AuthenticationException(null, null);
     }
 
+
     @Autowired
-    public void setFailureHandler(AuthFailureHandler failureHandler) {
+    private void setFailureHandler(HttpRedirectHandler failureHandler) {
         this.authFailureHandler = failureHandler;
     }
 }
